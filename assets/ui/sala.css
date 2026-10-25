@@ -1,0 +1,44 @@
+/* Fumarola Rally — sala (corrida em rede): abrir, digitar o IP, esperar. */
+#sala-fundo { position: absolute; left: 0%; top: 0%; width: 100%; height: 100%; background-color: #0b0705d8; border-width: 0px; z-index: 40; }
+#sala-titulo { --widget: text; position: absolute; left: 50%; top: 6%; text-align: center; font-size: 6%; color: #ffb347; content: "SALA"; z-index: 41; }
+#sala-rotulo { --widget: text; position: absolute; left: 30%; top: 19%; text-align: center; font-size: 2.4%; color: #c9b38f; content: ""; z-index: 41; }
+#sala-ip { --widget: text; position: absolute; left: 30%; top: 25%; text-align: center; font-size: 5.5%; color: #ffe9c2; content: ""; z-index: 41; }
+#sala-estado { --widget: text; position: absolute; left: 30%; top: 36%; text-align: center; font-size: 2.6%; color: #ffb347; content: ""; z-index: 41; }
+.sala-jog { --widget: text; position: absolute; left: 30%; text-align: center; font-size: 3%; color: #ffe9c2; content: ""; z-index: 41; }
+#sala-j1 { --class: sala-jog; top: 46%; }
+#sala-j2 { --class: sala-jog; top: 52%; }
+#sala-j3 { --class: sala-jog; top: 58%; }
+#sala-j4 { --class: sala-jog; top: 64%; }
+#sala-dica { --widget: text; position: absolute; left: 50%; top: 94%; text-align: center; font-size: 2.2%; color: #8c7d63; content: ""; z-index: 41; }
+/* Teclado da tela: alvo de dedo (9% x 12%), à direita; no PC as teclas
+   numéricas fazem o mesmo. */
+.sala-tecla { position: absolute; width: 9%; height: 12%; background-color: #2a1a12e0; border-width: 0px; z-index: 41; }
+.sala-tecla-t { --widget: text; position: absolute; left: 0%; top: 24%; width: 100%; height: 100%; text-align: center; font-size: 5%; color: #ffe9c2; content: ""; z-index: 42; }
+#sala-k1 { --class: sala-tecla; left: 62%; top: 20%;}
+#sala-k1-t { --class: sala-tecla-t; --parent: #sala-k1; content: "1"; }
+#sala-k2 { --class: sala-tecla; left: 72%; top: 20%;}
+#sala-k2-t { --class: sala-tecla-t; --parent: #sala-k2; content: "2"; }
+#sala-k3 { --class: sala-tecla; left: 82%; top: 20%;}
+#sala-k3-t { --class: sala-tecla-t; --parent: #sala-k3; content: "3"; }
+#sala-k4 { --class: sala-tecla; left: 62%; top: 33%;}
+#sala-k4-t { --class: sala-tecla-t; --parent: #sala-k4; content: "4"; }
+#sala-k5 { --class: sala-tecla; left: 72%; top: 33%;}
+#sala-k5-t { --class: sala-tecla-t; --parent: #sala-k5; content: "5"; }
+#sala-k6 { --class: sala-tecla; left: 82%; top: 33%;}
+#sala-k6-t { --class: sala-tecla-t; --parent: #sala-k6; content: "6"; }
+#sala-k7 { --class: sala-tecla; left: 62%; top: 46%;}
+#sala-k7-t { --class: sala-tecla-t; --parent: #sala-k7; content: "7"; }
+#sala-k8 { --class: sala-tecla; left: 72%; top: 46%;}
+#sala-k8-t { --class: sala-tecla-t; --parent: #sala-k8; content: "8"; }
+#sala-k9 { --class: sala-tecla; left: 82%; top: 46%;}
+#sala-k9-t { --class: sala-tecla-t; --parent: #sala-k9; content: "9"; }
+#sala-kp { --class: sala-tecla; left: 62%; top: 59%;}
+#sala-kp-t { --class: sala-tecla-t; --parent: #sala-kp; content: "."; }
+#sala-k0 { --class: sala-tecla; left: 72%; top: 59%;}
+#sala-k0-t { --class: sala-tecla-t; --parent: #sala-k0; content: "0"; }
+#sala-kx { --class: sala-tecla; left: 82%; top: 59%;}
+#sala-kx-t { --class: sala-tecla-t; --parent: #sala-kx; content: "<"; }
+#sala-ok { --class: sala-tecla; left: 62%; top: 72%; width: 29%;}
+#sala-ok-t { --class: sala-tecla-t; --parent: #sala-ok; color: #ffb347; content: "OK"; }
+#sala-volta { position: absolute; left: 3%; top: 4%; width: 12%; height: 9%; background-color: #2a1a12e0; border-width: 0px; z-index: 41; }
+#sala-volta-t { --widget: text; --parent: #sala-volta; position: absolute; left: 0%; top: 30%; width: 100%; height: 100%; text-align: center; font-size: 3%; color: #c9b38f; content: "voltar"; z-index: 42; }

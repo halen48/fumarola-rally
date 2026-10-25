@@ -1,0 +1,34 @@
+{
+ "base": {
+  "arquivo": "base.pak.gz",
+  "bytes": 6645086,
+  "sha256": "067ebbaa5752715f"
+ },
+ "mapas": {
+  "caldeira": {
+   "arquivo": "caldeira.pak.gz",
+   "bytes": 3068219,
+   "sha256": "202cc7d383b6a665"
+  },
+  "cinzas": {
+   "arquivo": "cinzas.pak.gz",
+   "bytes": 3606830,
+   "sha256": "f231906b0a39ecc0"
+  },
+  "obsidiana": {
+   "arquivo": "obsidiana.pak.gz",
+   "bytes": 2780185,
+   "sha256": "08d3ded5e952db4f"
+  },
+  "anel": {
+   "arquivo": "anel.pak.gz",
+   "bytes": 3296059,
+   "sha256": "3acde7528480742c"
+  },
+  "cume": {
+   "arquivo": "cume.pak.gz",
+   "bytes": 3758805,
+   "sha256": "ea826a7ef8826dbf"
+  }
+ }
+}

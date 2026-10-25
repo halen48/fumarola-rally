@@ -1,0 +1,70 @@
+{
+ "name": "faiscas_muro",
+ "emitters": [
+  {
+   "name": "faisca",
+   "capacity": 80,
+   "rate": 0,
+   "burstCount": 26,
+   "shape": "sphere",
+   "shapeSize": [
+    0.05,
+    0.05,
+    0.05
+   ],
+   "lifetime": [
+    0.25,
+    0.55
+   ],
+   "speed": [
+    1.2,
+    3.0
+   ],
+   "direction": [
+    0,
+    1,
+    0
+   ],
+   "spread": 0.7,
+   "size": [
+    0.015,
+    0.028
+   ],
+   "gravity": [
+    0,
+    -9.8,
+    0
+   ],
+   "drag": 0.4,
+   "collideDepth": true,
+   "bounce": 0.35,
+   "friction": 0.4,
+   "facing": "velocity",
+   "stretch": 0.015,
+   "texture": "builtin:spark",
+   "blend": "additive",
+   "emissive": 3.0,
+   "softDistance": 0.0,
+   "color": [
+    {
+     "t": 0,
+     "rgba": [
+      1.0,
+      0.9,
+      0.6,
+      1.0
+     ]
+    },
+    {
+     "t": 1,
+     "rgba": [
+      1.0,
+      0.35,
+      0.05,
+      0.0
+     ]
+    }
+   ]
+  }
+ ]
+}

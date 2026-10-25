@@ -1,0 +1,12 @@
+{
+  "author": "Eruption Labs",
+  "name": "Fumarola Rally",
+  "description": "Showcase de corrida HD-2D do Eruption Engine: pistas vulcanicas, carros em pixel art, corrida em rede por IP.",
+  "startup_map": "caldeira",
+  "version": "0.1.0",
+  "camera": { "distance": 140.0, "fov": 42.0, "pitch": 35.0, "yaw": -90.0, "keep_inside_map": false },
+  "export": {
+    "include": ["assets/fonts/*", "assets/sprites/default.png", "assets/sprites/carros/*", "assets/ui/**/*", "assets/sounds/**/*", "assets/textures/*", "assets/props/*", "assets/musica/*"],
+    "exclude": ["**/*.bak*"]
+  }
+}

@@ -1,0 +1,91 @@
+{
+ "name": "turbo",
+ "emitters": [
+  {
+   "name": "chama",
+   "capacity": 120,
+   "rate": 70,
+   "shape": "point",
+   "lifetime": [
+    0.1,
+    0.22
+   ],
+   "speed": [
+    1.2,
+    2.2
+   ],
+   "direction": [
+    0,
+    0.05,
+    -1
+   ],
+   "spread": 0.12,
+   "size": [
+    0.1,
+    0.16
+   ],
+   "sizeOverLife": [
+    [
+     0,
+     1.0
+    ],
+    [
+     1,
+     0.3
+    ]
+   ],
+   "texture": "builtin:flame",
+   "flipCols": 4,
+   "flipRows": 4,
+   "flipMode": "life",
+   "blend": "additive",
+   "emissive": 3.5,
+   "facing": "camera",
+   "softDistance": 0.0,
+   "color": [
+    {
+     "t": 0,
+     "rgba": [
+      0.75,
+      0.9,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "t": 0.35,
+     "rgba": [
+      1.0,
+      0.6,
+      0.2,
+      1.0
+     ]
+    },
+    {
+     "t": 1,
+     "rgba": [
+      0.9,
+      0.2,
+      0.05,
+      0.0
+     ]
+    }
+   ],
+   "light": {
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ],
+    "intensity": 2.5,
+    "radius": 1.6,
+    "flicker": 0.35,
+    "offset": [
+     0,
+     0.1,
+     -0.2
+    ]
+   }
+  }
+ ]
+}

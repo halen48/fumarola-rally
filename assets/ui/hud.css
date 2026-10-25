@@ -1,0 +1,153 @@
+/* Fumarola Rally — HUD.
+ * Só texto, barras, retângulos e o retrato do carro (um quadro da própria
+ * folha de sprite, por ui.image_rect): leve no celular e no browser. */
+.canto { --widget: text; position: absolute; font-size: 3.2%; color: #ffe9c2; z-index: 20; }
+#hud-volta { --class: canto; left: 2%; top: 2%; content: "VOLTA 1/3"; }
+#hud-pos { --class: canto; left: 2%; top: 6.5%; font-size: 6%; color: #ffb347; content: "1º"; }
+#hud-tempo { --class: canto; left: 98%; top: 2%; text-align: right; font-size: 3%; content: "0:00.00"; }
+#hud-melhor { --class: canto; left: 98%; top: 6.5%; text-align: right; font-size: 2.2%; color: #c9b38f; content: ""; }
+#hud-vel { --class: canto; left: 2%; top: 84%; font-size: 5%; content: "0 km/h"; }
+.medidor { --widget: bar; position: absolute; left: 2%; width: 22%; height: 2.4%; background-color: #140d09c8; z-index: 20; }
+#hud-turbo { --class: medidor; top: 92%; color: #4fd2ff; }
+#hud-calor { --class: medidor; top: 95.5%; color: #ff5a1f; }
+#hud-aviso { --class: canto; left: 50%; top: 38%; text-align: center; font-size: 8%; color: #fff3d6; content: ""; z-index: 30; }
+#hud-dica { --class: canto; left: 50%; top: 50%; text-align: center; font-size: 2.6%; color: #c9b38f; content: ""; z-index: 30; }
+
+/* ORDEM DA CORRIDA — a fila de turnos dos RPG virada régua de corrida: um
+ * cartão por carro, da esquerda (líder) para a direita, e em vez da espera
+ * até o próximo turno, a distância em segundos até o líder. O script só
+ * escolhe para onde cada cartão desliza (ui.place); a cara é toda daqui. */
+#ordem { position: absolute; left: 12%; top: 1.2%; width: 76%; height: 9.5%; background-color: #0d0806a8; border-width: 0px; z-index: 18; }
+.vaga { position: absolute; top: 0%; width: 12.2%; height: 100%; background-color: #2a1a12e0; border-width: 0px; z-index: 19; }
+.vaga-ret { --widget: image; position: absolute; left: 3%; top: 6%; width: 40%; height: 88%; z-index: 21; }
+.vaga-pos { --widget: text; position: absolute; left: 47%; top: 4%; font-size: 3.4%; color: #ffb347; content: ""; z-index: 21; }
+.vaga-nome { --widget: text; position: absolute; left: 47%; top: 44%; font-size: 1.9%; color: #ffe9c2; content: ""; z-index: 21; }
+.vaga-gap { --widget: text; position: absolute; left: 47%; top: 70%; font-size: 1.8%; color: #c9b38f; content: ""; z-index: 21; }
+#vaga-1 { --class: vaga; --parent: #ordem; left: 0.0%; }
+#vaga-1-ret { --class: vaga-ret; --parent: #vaga-1; }
+#vaga-1-pos { --class: vaga-pos; --parent: #vaga-1; }
+#vaga-1-nome { --class: vaga-nome; --parent: #vaga-1; }
+#vaga-1-gap { --class: vaga-gap; --parent: #vaga-1; }
+#vaga-2 { --class: vaga; --parent: #ordem; left: 12.5%; }
+#vaga-2-ret { --class: vaga-ret; --parent: #vaga-2; }
+#vaga-2-pos { --class: vaga-pos; --parent: #vaga-2; }
+#vaga-2-nome { --class: vaga-nome; --parent: #vaga-2; }
+#vaga-2-gap { --class: vaga-gap; --parent: #vaga-2; }
+#vaga-3 { --class: vaga; --parent: #ordem; left: 25.0%; }
+#vaga-3-ret { --class: vaga-ret; --parent: #vaga-3; }
+#vaga-3-pos { --class: vaga-pos; --parent: #vaga-3; }
+#vaga-3-nome { --class: vaga-nome; --parent: #vaga-3; }
+#vaga-3-gap { --class: vaga-gap; --parent: #vaga-3; }
+#vaga-4 { --class: vaga; --parent: #ordem; left: 37.5%; }
+#vaga-4-ret { --class: vaga-ret; --parent: #vaga-4; }
+#vaga-4-pos { --class: vaga-pos; --parent: #vaga-4; }
+#vaga-4-nome { --class: vaga-nome; --parent: #vaga-4; }
+#vaga-4-gap { --class: vaga-gap; --parent: #vaga-4; }
+#vaga-5 { --class: vaga; --parent: #ordem; left: 50.0%; }
+#vaga-5-ret { --class: vaga-ret; --parent: #vaga-5; }
+#vaga-5-pos { --class: vaga-pos; --parent: #vaga-5; }
+#vaga-5-nome { --class: vaga-nome; --parent: #vaga-5; }
+#vaga-5-gap { --class: vaga-gap; --parent: #vaga-5; }
+#vaga-6 { --class: vaga; --parent: #ordem; left: 62.5%; }
+#vaga-6-ret { --class: vaga-ret; --parent: #vaga-6; }
+#vaga-6-pos { --class: vaga-pos; --parent: #vaga-6; }
+#vaga-6-nome { --class: vaga-nome; --parent: #vaga-6; }
+#vaga-6-gap { --class: vaga-gap; --parent: #vaga-6; }
+#vaga-7 { --class: vaga; --parent: #ordem; left: 75.0%; }
+#vaga-7-ret { --class: vaga-ret; --parent: #vaga-7; }
+#vaga-7-pos { --class: vaga-pos; --parent: #vaga-7; }
+#vaga-7-nome { --class: vaga-nome; --parent: #vaga-7; }
+#vaga-7-gap { --class: vaga-gap; --parent: #vaga-7; }
+#vaga-8 { --class: vaga; --parent: #ordem; left: 87.5%; }
+#vaga-8-ret { --class: vaga-ret; --parent: #vaga-8; }
+#vaga-8-pos { --class: vaga-pos; --parent: #vaga-8; }
+#vaga-8-nome { --class: vaga-nome; --parent: #vaga-8; }
+#vaga-8-gap { --class: vaga-gap; --parent: #vaga-8; }
+
+/* Minimapa: contorno da pista em pontos e um quadrado por carro; o script
+ * posiciona cada um (ui.place) a partir da faixa do motor. */
+#mm-fundo { position: absolute; left: 80%; top: 64%; width: 18%; height: 32%; background-color: #140d09c8; border-width: 0px; z-index: 19; }
+.mm-ponto { position: absolute; left: 0%; top: 0%; width: 0.45%; height: 0.8%; background-color: #c9b38f; border-width: 0px; z-index: 20; }
+#mm-chegada { position: absolute; left: 0%; top: 0%; width: 1.2%; height: 2.1%; background-color: #ffffff; border-width: 0px; z-index: 20; }
+#mm-chegada-x { --parent: #mm-chegada; position: absolute; left: 25%; top: 25%; width: 50%; height: 50%; background-color: #111111; border-width: 0px; z-index: 20; }
+.mm-carro { position: absolute; left: 0%; top: 0%; width: 0.9%; height: 1.6%; background-color: #ffffff; border-width: 0px; z-index: 21; }
+#mm-p1 { --class: mm-ponto; }
+#mm-p2 { --class: mm-ponto; }
+#mm-p3 { --class: mm-ponto; }
+#mm-p4 { --class: mm-ponto; }
+#mm-p5 { --class: mm-ponto; }
+#mm-p6 { --class: mm-ponto; }
+#mm-p7 { --class: mm-ponto; }
+#mm-p8 { --class: mm-ponto; }
+#mm-p9 { --class: mm-ponto; }
+#mm-p10 { --class: mm-ponto; }
+#mm-p11 { --class: mm-ponto; }
+#mm-p12 { --class: mm-ponto; }
+#mm-p13 { --class: mm-ponto; }
+#mm-p14 { --class: mm-ponto; }
+#mm-p15 { --class: mm-ponto; }
+#mm-p16 { --class: mm-ponto; }
+#mm-p17 { --class: mm-ponto; }
+#mm-p18 { --class: mm-ponto; }
+#mm-p19 { --class: mm-ponto; }
+#mm-p20 { --class: mm-ponto; }
+#mm-p21 { --class: mm-ponto; }
+#mm-p22 { --class: mm-ponto; }
+#mm-p23 { --class: mm-ponto; }
+#mm-p24 { --class: mm-ponto; }
+#mm-p25 { --class: mm-ponto; }
+#mm-p26 { --class: mm-ponto; }
+#mm-p27 { --class: mm-ponto; }
+#mm-p28 { --class: mm-ponto; }
+#mm-p29 { --class: mm-ponto; }
+#mm-p30 { --class: mm-ponto; }
+#mm-p31 { --class: mm-ponto; }
+#mm-p32 { --class: mm-ponto; }
+#mm-p33 { --class: mm-ponto; }
+#mm-p34 { --class: mm-ponto; }
+#mm-p35 { --class: mm-ponto; }
+#mm-p36 { --class: mm-ponto; }
+#mm-p37 { --class: mm-ponto; }
+#mm-p38 { --class: mm-ponto; }
+#mm-p39 { --class: mm-ponto; }
+#mm-p40 { --class: mm-ponto; }
+#mm-p41 { --class: mm-ponto; }
+#mm-p42 { --class: mm-ponto; }
+#mm-p43 { --class: mm-ponto; }
+#mm-p44 { --class: mm-ponto; }
+#mm-p45 { --class: mm-ponto; }
+#mm-p46 { --class: mm-ponto; }
+#mm-p47 { --class: mm-ponto; }
+#mm-p48 { --class: mm-ponto; }
+#mm-p49 { --class: mm-ponto; }
+#mm-p50 { --class: mm-ponto; }
+#mm-p51 { --class: mm-ponto; }
+#mm-p52 { --class: mm-ponto; }
+#mm-p53 { --class: mm-ponto; }
+#mm-p54 { --class: mm-ponto; }
+#mm-p55 { --class: mm-ponto; }
+#mm-p56 { --class: mm-ponto; }
+#mm-p57 { --class: mm-ponto; }
+#mm-p58 { --class: mm-ponto; }
+#mm-p59 { --class: mm-ponto; }
+#mm-p60 { --class: mm-ponto; }
+#mm-p61 { --class: mm-ponto; }
+#mm-p62 { --class: mm-ponto; }
+#mm-p63 { --class: mm-ponto; }
+#mm-p64 { --class: mm-ponto; }
+#mm-p65 { --class: mm-ponto; }
+#mm-p66 { --class: mm-ponto; }
+#mm-p67 { --class: mm-ponto; }
+#mm-p68 { --class: mm-ponto; }
+#mm-p69 { --class: mm-ponto; }
+#mm-p70 { --class: mm-ponto; }
+#mm-p71 { --class: mm-ponto; }
+#mm-p72 { --class: mm-ponto; }
+#mm-c1 { --class: mm-carro; }
+#mm-c2 { --class: mm-carro; }
+#mm-c3 { --class: mm-carro; }
+#mm-c4 { --class: mm-carro; }
+#mm-c5 { --class: mm-carro; }
+#mm-c6 { --class: mm-carro; }
+#mm-c7 { --class: mm-carro; }
+#mm-c8 { --class: mm-carro; }

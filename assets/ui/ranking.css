@@ -1,0 +1,59 @@
+/* Fumarola Rally — classificação. */
+#rk-fundo { position: absolute; left: 0%; top: 0%; width: 100%; height: 100%; background-color: #0b0705b8; border-width: 0px; z-index: 40; }
+#rk-titulo { --widget: text; position: absolute; left: 50%; top: 5%; text-align: center; font-size: 6%; color: #ffb347; content: ""; z-index: 41; }
+#rk-sub { --widget: text; position: absolute; left: 50%; top: 13.5%; text-align: center; font-size: 2.6%; color: #c9b38f; content: ""; z-index: 41; }
+.rk-linha { position: absolute; left: 22%; top: 20%; width: 56%; height: 8.4%; background-color: #2a1a12e0; border-width: 0px; z-index: 41; }
+.rk-pos { --widget: text; position: absolute; left: 3%; top: 18%; font-size: 4.4%; color: #ffb347; content: ""; z-index: 42; }
+.rk-ret { --widget: image; border-width: 0px; position: absolute; left: 11%; top: 4%; width: 11%; height: 92%; z-index: 42; }
+.rk-nome { --widget: text; position: absolute; left: 25%; top: 26%; font-size: 3.2%; color: #ffe9c2; content: ""; z-index: 42; }
+.rk-ganho { --widget: text; position: absolute; left: 76%; top: 26%; text-align: right; font-size: 3.2%; color: #7fe08a; content: ""; z-index: 42; }
+.rk-total { --widget: text; position: absolute; left: 97%; top: 18%; text-align: right; font-size: 4.4%; color: #ffe9c2; content: ""; z-index: 42; }
+#rk-dica { --widget: text; position: absolute; left: 50%; top: 93%; text-align: center; font-size: 2.4%; color: #8c7d63; content: ""; z-index: 41; }
+#rk-1 { --class: rk-linha; }
+#rk-1-pos { --class: rk-pos; --parent: #rk-1; }
+#rk-1-ret { --class: rk-ret; --parent: #rk-1; }
+#rk-1-nome { --class: rk-nome; --parent: #rk-1; }
+#rk-1-ganho { --class: rk-ganho; --parent: #rk-1; }
+#rk-1-total { --class: rk-total; --parent: #rk-1; }
+#rk-2 { --class: rk-linha; }
+#rk-2-pos { --class: rk-pos; --parent: #rk-2; }
+#rk-2-ret { --class: rk-ret; --parent: #rk-2; }
+#rk-2-nome { --class: rk-nome; --parent: #rk-2; }
+#rk-2-ganho { --class: rk-ganho; --parent: #rk-2; }
+#rk-2-total { --class: rk-total; --parent: #rk-2; }
+#rk-3 { --class: rk-linha; }
+#rk-3-pos { --class: rk-pos; --parent: #rk-3; }
+#rk-3-ret { --class: rk-ret; --parent: #rk-3; }
+#rk-3-nome { --class: rk-nome; --parent: #rk-3; }
+#rk-3-ganho { --class: rk-ganho; --parent: #rk-3; }
+#rk-3-total { --class: rk-total; --parent: #rk-3; }
+#rk-4 { --class: rk-linha; }
+#rk-4-pos { --class: rk-pos; --parent: #rk-4; }
+#rk-4-ret { --class: rk-ret; --parent: #rk-4; }
+#rk-4-nome { --class: rk-nome; --parent: #rk-4; }
+#rk-4-ganho { --class: rk-ganho; --parent: #rk-4; }
+#rk-4-total { --class: rk-total; --parent: #rk-4; }
+#rk-5 { --class: rk-linha; }
+#rk-5-pos { --class: rk-pos; --parent: #rk-5; }
+#rk-5-ret { --class: rk-ret; --parent: #rk-5; }
+#rk-5-nome { --class: rk-nome; --parent: #rk-5; }
+#rk-5-ganho { --class: rk-ganho; --parent: #rk-5; }
+#rk-5-total { --class: rk-total; --parent: #rk-5; }
+#rk-6 { --class: rk-linha; }
+#rk-6-pos { --class: rk-pos; --parent: #rk-6; }
+#rk-6-ret { --class: rk-ret; --parent: #rk-6; }
+#rk-6-nome { --class: rk-nome; --parent: #rk-6; }
+#rk-6-ganho { --class: rk-ganho; --parent: #rk-6; }
+#rk-6-total { --class: rk-total; --parent: #rk-6; }
+#rk-7 { --class: rk-linha; }
+#rk-7-pos { --class: rk-pos; --parent: #rk-7; }
+#rk-7-ret { --class: rk-ret; --parent: #rk-7; }
+#rk-7-nome { --class: rk-nome; --parent: #rk-7; }
+#rk-7-ganho { --class: rk-ganho; --parent: #rk-7; }
+#rk-7-total { --class: rk-total; --parent: #rk-7; }
+#rk-8 { --class: rk-linha; }
+#rk-8-pos { --class: rk-pos; --parent: #rk-8; }
+#rk-8-ret { --class: rk-ret; --parent: #rk-8; }
+#rk-8-nome { --class: rk-nome; --parent: #rk-8; }
+#rk-8-ganho { --class: rk-ganho; --parent: #rk-8; }
+#rk-8-total { --class: rk-total; --parent: #rk-8; }

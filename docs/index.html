@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fumarola Rally</title>
+<!-- Casca web do jogo (GitHub Pages: halen48.github.io/fumarola-rally/). O
+     motor entra como eruption.js + eruption.wasm (Emscripten, MODULARIZE,
+     createEruption) e o jogo como os pacotes de pacotes.json, tudo nesta pasta. Nada é baixado
+     antes de o navegador provar que desenha 3D (WebGL2). Sem threads: não precisa de
+     COOP/COEP, então roda dentro de um iframe no github.io. -->
+<style>
+  :root { --fundo: #0d0806; --texto: #ffe9c2; --destaque: #ffb347; --apagado: #9c8a6c; }
+  html, body { margin: 0; height: 100%; background: var(--fundo); color: var(--texto);
+               font: 15px/1.4 system-ui, sans-serif; overflow: hidden; }
+  #eruption-canvas { display: block; width: 100%; height: 100%; }
+  #painel { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 14px; padding: 16px; text-align: center; background: var(--fundo); }
+  h1 { margin: 0; color: var(--destaque); letter-spacing: 0.08em; font-size: clamp(22px, 5vw, 40px); }
+  #msg { color: var(--apagado); max-width: 32em; }
+  #barra { width: min(320px, 80%); height: 6px; background: #2a1a12; border-radius: 3px; overflow: hidden; }
+  #barra > div { width: 0; height: 100%; background: var(--destaque); transition: width 0.2s; }
+  .oculto { display: none !important; }
+</style>
+</head>
+<body>
+<canvas id="eruption-canvas" tabindex="0"></canvas>
+<div id="painel">
+  <h1>FUMAROLA RALLY</h1>
+  <div id="barra"><div></div></div>
+  <div id="msg">Verificando o navegador…</div>
+</div>
+<script>
+// Som: o navegador só deixa o áudio tocar depois de um gesto, e o motor
+// destrava com toque ou clique. Quem joga só no teclado (setas e Enter)
+// nunca clica, e o jogo ficava mudo: qualquer gesto, tecla inclusive,
+// retoma todos os contextos de áudio da página.
+const contextos = [];
+for (const Classe of [window.AudioContext, window.webkitAudioContext]) {
+  if (!Classe) continue;
+  const original = Classe.prototype.constructor;
+  window[Classe.name] = class extends original {
+    constructor(...a) { super(...a); contextos.push(this); }
+  };
+}
+const destrava = () => {
+  for (const c of contextos) if (c.state !== "running") c.resume().catch(() => {});
+  if (window.miniaudio && window.miniaudio.unlock) window.miniaudio.unlock();
+};
+for (const tipo of ["keydown", "pointerdown", "touchstart", "touchend", "mousedown", "click"])
+  document.addEventListener(tipo, destrava, true);
+
+// Sem gesto ainda, o jogo abriria mudo e a música só entraria na primeira
+// tecla. O painel fica com "aperte para começar" e engole esse gesto, para
+// ele não virar também um Enter no menu.
+let esperaGesto = false;
+const comeca = (ev) => {
+  if (!esperaGesto) return;
+  esperaGesto = false;
+  destrava();
+  ev.stopImmediatePropagation();
+  ev.preventDefault();
+  document.getElementById("painel").classList.add("oculto");
+  document.getElementById("eruption-canvas").focus();
+};
+for (const tipo of ["keydown", "pointerdown", "touchstart"])
+  window.addEventListener(tipo, comeca, { capture: true, passive: false });
+
+(async () => {
+  const msg = document.getElementById("msg");
+  const barra = document.querySelector("#barra > div");
+  const painel = document.getElementById("painel");
+  const falha = (texto) => { msg.textContent = texto; barra.parentElement.classList.add("oculto"); };
+
+  // Motor ainda não publicado: a página continua honesta em vez de quebrar.
+  // Sem resposta nenhuma é rede (celular fora do Wi-Fi, servidor longe), não
+  // falta de motor: as duas falhas pedem coisas diferentes de quem joga.
+  const temMotor = await fetch("eruption.js", { method: "HEAD", cache: "no-store" }).then(r => r.ok).catch(() => null);
+  if (temMotor === null) {
+    falha("Sem conexão com o servidor do jogo. Confira a rede e recarregue a página.");
+    return;
+  }
+  if (!temMotor) {
+    falha("A versão para navegador está em construção. Volte em breve.");
+    return;
+  }
+
+  // Acessível primeiro: a base é WebGL2 (todo navegador de 2017 para cá,
+  // Brave e Chrome do Linux sem flag inclusive); WebGPU, quando houver, é
+  // escolha do motor. Só barra se nem WebGL2 existir.
+  if (!document.createElement("canvas").getContext("webgl2")) {
+    falha("Este navegador não desenha 3D (sem WebGL2). Tente atualizá-lo.");
+    return;
+  }
+
+  // Pacotes do jogo: gzip descomprimido pelo próprio
+  // navegador, depois cada arquivo vai para o sistema de arquivos do
+  // Emscripten antes de o motor iniciar. O motor lê os caminhos de sempre.
+  const pacotes = await fetch("pacotes.json").then(r => r.json());
+  // Primeiro só a base e a pista da 1ª etapa (a meta da primeira imagem é
+  // ~8 MB); as outras pistas descem com o jogo já rodando, bem antes da 2ª
+  // etapa (cada corrida dura uns 2 minutos).
+  const mapas = Object.values(pacotes.mapas);
+  const lista = [pacotes.base, mapas[0]];
+  const depois = mapas.slice(1);
+  const total = lista.reduce((t, p) => t + p.bytes, 0);
+  let baixado = 0;
+  const progresso = (n) => {
+    baixado += n;
+    barra.style.width = Math.round(100 * baixado / total) + "%";
+    msg.textContent = `Carregando… ${(baixado / 1048576).toFixed(1)} de ${(total / 1048576).toFixed(1)} MB`;
+  };
+
+  // Wi-Fi de celular cai ou trava no meio: sem byte novo por 15 s a conexão é
+  // cortada, e quem chama tenta de novo. `conta`: entra na barra de progresso
+  // (uma tentativa que falhou devolve o que tinha somado).
+  async function baixa(p, conta, gzip = true) {
+    const corta = new AbortController();
+    let parado, somado = 0;
+    const vigia = () => { clearTimeout(parado); parado = setTimeout(() => corta.abort(new Error("download parado")), 15000); };
+    vigia();
+    try {
+      const r = await fetch(p.arquivo, { signal: corta.signal, cache: "no-store" });
+      if (!r.ok) throw new Error(p.arquivo + ": " + r.status);
+      const contador = new TransformStream({ transform(pedaco, c) {
+        vigia();
+        if (conta) { somado += pedaco.byteLength; progresso(pedaco.byteLength); }
+        c.enqueue(pedaco);
+      } });
+      let cru = r.body.pipeThrough(contador);
+      if (gzip) cru = cru.pipeThrough(new DecompressionStream("gzip"));
+      return new Uint8Array(await new Response(cru).arrayBuffer());
+    } catch (e) {
+      if (conta) progresso(-somado);
+      throw e;
+    } finally {
+      clearTimeout(parado);
+    }
+  }
+
+  // Tenta até conseguir, cada vez mais devagar; `aviso(tentativa, erro)`.
+  async function insiste(p, conta, aviso, gzip = true) {
+    for (let tenta = 1; ; ++tenta) {
+      try { return await baixa(p, conta, gzip); }
+      catch (e) {
+        aviso(tenta, e);
+        await new Promise(r => setTimeout(r, Math.min(500 * tenta, 10000)));
+      }
+    }
+  }
+
+  // "EPAK1", depois por arquivo: u32 caminho, caminho UTF-8, u32 tamanho, bytes.
+  function abre(buf) {
+    const dv = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
+    const txt = new TextDecoder();
+    if (txt.decode(buf.subarray(0, 5)) !== "EPAK1") throw new Error("pacote inválido");
+    const arquivos = [];
+    for (let o = 5; o < buf.length;) {
+      const nc = dv.getUint32(o, true); o += 4;
+      const caminho = txt.decode(buf.subarray(o, o + nc)); o += nc;
+      const n = dv.getUint32(o, true); o += 4;
+      arquivos.push([caminho, buf.subarray(o, o + n)]); o += n;
+    }
+    return arquivos;
+  }
+
+  function grava(FS, arquivos) {
+    for (const [caminho, dados] of arquivos) {
+      const partes = caminho.split("/");
+      let pasta = "";
+      for (const p of partes.slice(0, -1)) {
+        pasta += "/" + p;
+        try { FS.mkdir(pasta); } catch (_) { /* já existe */ }
+      }
+      FS.writeFile("/" + caminho, dados);
+    }
+  }
+
+  // O motor (.wasm, ~7 MB) também desce por aqui, junto com os pacotes: o
+  // carregador do Emscripten baixa uma vez só e desiste se o Wi-Fi do
+  // celular cair no meio ("both async and sync fetching of the wasm failed").
+  const motorWasm = insiste({ arquivo: "eruption.wasm" }, false,
+    (tenta, e) => console.warn("motor não baixou, tentativa " + tenta + ":", e), false);
+
+  let arquivos = [];
+  try {
+    msg.textContent = "Carregando…";
+    for (const p of lista) {
+      const buf = await insiste(p, true, (tenta, e) => {
+        console.warn("pacote não baixou, tentativa " + tenta + ":", p.arquivo, e);
+        msg.textContent = `A conexão caiu, tentando de novo (${tenta})…`;
+      });
+      arquivos = arquivos.concat(abre(buf));
+    }
+  } catch (e) {
+    falha("Não deu para abrir o jogo: " + e.message);
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = "eruption.js";
+  script.onload = async () => {
+    try {
+      msg.textContent = "Carregando o motor…";
+      const wasmBinary = await motorWasm;
+      msg.textContent = "Montando a pista…";
+      const motor = await createEruption({
+        canvas: document.getElementById("eruption-canvas"),
+        // O motor já baixado acima (com novas tentativas); sem isto o
+        // carregador do Emscripten o baixaria de novo.
+        instantiateWasm: (imports, recebe) => {
+          WebAssembly.instantiate(wasmBinary, imports).then(r => recebe(r.instance, r.module))
+            .catch(e => falha("Não deu para iniciar o jogo: " + e));
+          return {};
+        },
+        // Precisa de -sEXPORTED_RUNTIME_METHODS=FS no build do motor.
+        preRun: [(m) => {
+          grava(m.FS, arquivos);
+          // Botões do controle de toque (o analógico é do motor): segurar
+          // Turbo = barra de espaço, OK = Enter. Só aparecem na corrida e só
+          // com tela de toque (o jogo chama input.touch_pad).
+          m.ENV.ERUPTION_TOUCH_PAD = "space:Turbo,enter:OK";
+          m.ENV.ERUPTION_TOUCH_HUD = "0.045"; // fonte do painel: fração da altura da tela, como no APK
+        }],
+        arguments: ["--project", "/", "--game"],
+        onReady: () => {
+          if (contextos.length === 0 || contextos.every(c => c.state === "running")) {
+            painel.classList.add("oculto");
+            document.getElementById("eruption-canvas").focus();
+            return;
+          }
+          barra.parentElement.classList.add("oculto");
+          msg.textContent = "Aperte qualquer tecla ou toque na tela para começar";
+          esperaGesto = true;
+        },
+      });
+      // O jogo espera a pista antes de carregá-la; então uma falha de rede
+      // aqui travaria o quadro de pontos: tenta de novo, cada vez mais devagar.
+      for (const p of depois)
+        grava(motor.FS, abre(await insiste(p, false,
+          (tenta, e) => console.warn("pista não baixou, tentativa " + tenta + ":", p.arquivo, e))));
+    } catch (e) {
+      falha("Não deu para iniciar o jogo: " + e);
+    }
+  };
+  script.onerror = () => falha("Não deu para baixar o motor.");
+  document.body.appendChild(script);
+})();
+</script>
+</body>
+</html>

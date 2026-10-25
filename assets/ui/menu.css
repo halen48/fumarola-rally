@@ -1,0 +1,23 @@
+/* Fumarola Rally — menu. */
+#menu-fundo { position: absolute; left: 0%; top: 0%; width: 100%; height: 100%; background-color: #0b0705a0; border-width: 0px; z-index: 40; }
+#menu-titulo { --widget: text; position: absolute; left: 50%; top: 6%; text-align: center; font-size: 9%; color: #ffb347; content: "FUMAROLA RALLY"; z-index: 41; }
+#menu-sub { --widget: text; position: absolute; left: 50%; top: 17%; text-align: center; font-size: 2.4%; color: #c9b38f; content: "campeonato do vulcão: 5 pistas"; z-index: 41; }
+#menu-garagem { position: absolute; left: 37.0%; top: 27%; width: 26%; height: 46.22%; background-color: #140d09c8; border-width: 0px; z-index: 41; }
+#menu-carro-img { --widget: image; --parent: #menu-garagem; position: absolute; left: 4%; top: 4%; width: 92%; height: 92%; z-index: 42; }
+#menu-seta-e { --widget: text; position: absolute; left: 26.0%; top: 43.111111111111114%; width: 10%; height: 14%; text-align: center; font-size: 6%; color: #ffb347; content: "«"; z-index: 41; }
+/* Setas com caixa de 10% x 14%: alvo de dedo (o texto sozinho tinha ~25x43 px). */
+#menu-seta-d { --widget: text; position: absolute; left: 64.0%; top: 43.111111111111114%; width: 10%; height: 14%; text-align: center; font-size: 6%; color: #ffb347; content: "»"; z-index: 41; }
+#menu-carro { --widget: text; position: absolute; left: 50%; top: 74.7%; text-align: center; font-size: 4%; color: #ffe9c2; content: ""; z-index: 41; }
+.ficha-rot { --widget: text; position: absolute; left: 36%; font-size: 2%; color: #c9b38f; content: ""; z-index: 41; }
+.ficha-bar { --widget: bar; position: absolute; left: 46%; width: 18%; height: 1.6%; background-color: #140d09e0; color: #ffb347; z-index: 41; }
+#ficha-vel-rot { --class: ficha-rot; top: 81.2%; content: "VELOCIDADE"; }
+#ficha-vel { --class: ficha-bar; top: 81.5%; }
+#ficha-curva-rot { --class: ficha-rot; top: 84.4%; content: "CURVA"; }
+#ficha-curva { --class: ficha-bar; top: 84.7%; }
+#ficha-peso-rot { --class: ficha-rot; top: 87.6%; content: "PESO"; }
+#ficha-peso { --class: ficha-bar; top: 87.9%; }
+#menu-dica { --widget: text; position: absolute; left: 50%; top: 94%; text-align: center; font-size: 2.2%; color: #8c7d63; content: "« » escolher o carro      Enter: correr"; z-index: 41; }
+#menu-criar { position: absolute; left: 4%; top: 80%; width: 22%; height: 9%; background-color: #2a1a12e0; border-width: 0px; z-index: 41; }
+#menu-criar-t { --widget: text; --parent: #menu-criar; position: absolute; left: 0%; top: 32%; width: 100%; height: 100%; text-align: center; font-size: 2.4%; color: #ffb347; content: "CRIAR SALA (C)"; z-index: 42; }
+#menu-entrar { position: absolute; left: 74%; top: 80%; width: 22%; height: 9%; background-color: #2a1a12e0; border-width: 0px; z-index: 41; }
+#menu-entrar-t { --widget: text; --parent: #menu-entrar; position: absolute; left: 0%; top: 32%; width: 100%; height: 100%; text-align: center; font-size: 2.4%; color: #ffb347; content: "ENTRAR NA SALA (E)"; z-index: 42; }

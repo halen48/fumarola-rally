@@ -1,0 +1,12 @@
+*.bak*
+.cache/
+imgui.ini
+assets/scripts/teste_config.luau
+assets/scripts/.luaurc
+assets/scripts/.vscode/
+assets/scenes/*.probes
+assets/external/*/*.probes
+
+# Cache do motor: o .spr sai das folhas (.sheet.json + .png) pelo
+# --import-sprite do próprio motor (ver o README).
+assets/sprites/carros/*.spr
